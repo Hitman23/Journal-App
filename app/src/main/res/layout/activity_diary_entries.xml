@@ -46,15 +46,6 @@ tools:context=".database.DiaryEntry">
         android:textColor="@android:color/primary_text_light"
         tools:text="11/11/1111" />
 
-    <!-- TextView that displays the update date -->
-    <TextView
-        android:id="@+id/diaryUpdatedOn"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/primary_text_light"
-        tools:text="11/11/1111" />
-
 </LinearLayout>
 
 

@@ -25,3 +25,4 @@ public interface DiaryDao {
         void deleteTask(DiaryEntry diaryEntry);
     }
 
+

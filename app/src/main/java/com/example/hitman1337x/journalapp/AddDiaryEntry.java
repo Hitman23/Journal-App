@@ -26,7 +26,7 @@ public class AddDiaryEntry extends AppCompatActivity {
     //logging
     private static final String TAG = AddDiaryEntry.class.getSimpleName();
 
-    TextView mEditTitle, mEditDescription;
+    EditText mEditTitle, mEditDescription;
     Button mButton;
 
     private int mDiaryEntryId = DEFAULT_DIARY_ENTRY_ID;
@@ -68,7 +68,7 @@ public class AddDiaryEntry extends AppCompatActivity {
 //    }
 
     private void intViews() {
-        mEditTitle = findViewById(R.id.diaryTitle);
+        mEditTitle = findViewById(R.id.editTextDiaryTitle);
         mEditDescription = findViewById(R.id.editTextDiaryDescription);
         mButton = findViewById(R.id.saveButton);
 
@@ -91,7 +91,7 @@ public class AddDiaryEntry extends AppCompatActivity {
         String description = mEditDescription.getText().toString();
         Date date = new Date();
 
-        DiaryEntry taskEntry = new DiaryEntry(title, description, date, date);
+        DiaryEntry taskEntry = new DiaryEntry(title, description, date);
         mDb.diaryDao().insertTask(taskEntry);
         finish();
     }

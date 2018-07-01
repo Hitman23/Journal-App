@@ -25,7 +25,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
-    public DiaryAdapter(Context context, ItemClickListener listener){
+    DiaryAdapter(Context context, ItemClickListener listener){
         this.mContext = context;
         mItemClickListener = listener;
 
@@ -49,13 +49,11 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         String title = diaryEntry.getTitle();
         String description = diaryEntry.getDescription();
         String createdOn = dateFormat.format(diaryEntry.getCreatedOn());
-        String updatedOn = dateFormat.format(diaryEntry.getUpdateOn());
 
         //Set values
         holder.DiaryTitleView.setText(title);
         holder.DiaryDescriptionView.setText(description);
         holder.createdOnView.setText(createdOn);
-        holder.updatedOnView.setText(updatedOn);
 
     }
 
@@ -87,13 +85,12 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         TextView DiaryTitleView, DiaryDescriptionView, createdOnView, updatedOnView;
 
 
-        public DiaryViewHolder(View itemView) {
+        DiaryViewHolder(View itemView) {
             super(itemView);
 
             DiaryTitleView = itemView.findViewById(R.id.diaryTitle);
             DiaryDescriptionView = itemView.findViewById(R.id.diaryDescription);
             createdOnView = itemView.findViewById(R.id.diaryCreatedOn);
-            updatedOnView = itemView.findViewById(R.id.diaryUpdatedOn);
 
             itemView.setOnClickListener(this);
         }

@@ -17,24 +17,22 @@ public class DiaryEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title, description;
-    private Date createdOn, updateOn;
+    private Date createdOn;
 
     @Ignore
-    public DiaryEntry (String title, String description, Date createdOn, Date updateOn)
+    public DiaryEntry (String title, String description, Date createdOn)
     {
         this.title = title;
         this.description = description;
         this.createdOn = createdOn;
-        this.updateOn = updateOn;
 
     }
 
-    public DiaryEntry (int id, String title, String description, Date createdOn, Date updateOn)
+    public DiaryEntry (int id, String title, String description, Date createdOn)
     {
         this.title = title;
         this.description = description;
         this.createdOn = createdOn;
-        this.updateOn = updateOn;
 
     }
 
@@ -66,11 +64,4 @@ public class DiaryEntry {
         this.createdOn = createdOn;
     }
 
-    public Date getUpdateOn() {
-        return updateOn;
-    }
-
-    public void setUpdateOn(Date updateOn) {
-        this.updateOn = updateOn;
-    }
 }
