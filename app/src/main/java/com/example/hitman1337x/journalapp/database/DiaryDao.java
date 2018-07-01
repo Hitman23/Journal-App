@@ -16,13 +16,16 @@ public interface DiaryDao {
         List<DiaryEntry> loadAllDiaryEntries();
 
         @Insert
-        void insertTask(DiaryEntry diaryEntry);
+        void insertDiary(DiaryEntry diaryEntry);
 
         @Update(onConflict = OnConflictStrategy.REPLACE)
-        void updateTask(DiaryEntry diaryEntry);
+        void updateDiary(DiaryEntry diaryEntry);
 
         @Delete
         void deleteTask(DiaryEntry diaryEntry);
+
+        @Query("SELECT * FROM diary WHERE id = :id")
+        DiaryEntry loadDById(int id);
     }
 
 

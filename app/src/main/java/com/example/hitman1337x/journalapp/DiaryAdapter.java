@@ -25,7 +25,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
-    DiaryAdapter(Context context, ItemClickListener listener){
+    public DiaryAdapter(Context context, ItemClickListener listener){
         this.mContext = context;
         mItemClickListener = listener;
 
@@ -65,10 +65,11 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         return mDiaryEntries.size();
     }
 
-    /**
-     * When data changes, this method updates the list of taskEntries
-     * and notifies the adapter to use the new values on it
-     */
+    public List<DiaryEntry> getmDiaryEntries()
+    {
+        return mDiaryEntries;
+    }
+
     public void setmDiaryEntries(List<DiaryEntry> DiaryEntries) {
         mDiaryEntries = DiaryEntries;
         notifyDataSetChanged();
@@ -85,7 +86,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         TextView DiaryTitleView, DiaryDescriptionView, createdOnView, updatedOnView;
 
 
-        DiaryViewHolder(View itemView) {
+        public DiaryViewHolder(View itemView) {
             super(itemView);
 
             DiaryTitleView = itemView.findViewById(R.id.diaryTitle);

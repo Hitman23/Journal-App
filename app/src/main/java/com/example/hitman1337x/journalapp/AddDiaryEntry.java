@@ -3,11 +3,9 @@ package com.example.hitman1337x.journalapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.hitman1337x.journalapp.database.AppDatabase;
 import com.example.hitman1337x.journalapp.database.DiaryEntry;
@@ -52,20 +50,28 @@ public class AddDiaryEntry extends AppCompatActivity {
             mButton.setText("Üpdate");
             if(mDiaryEntryId == DEFAULT_DIARY_ENTRY_ID)
             {
-                //TODO
-                //populate ui
+                mDiaryEntryId = intent.getIntExtra(EXTRA_DIARY_ID, DEFAULT_DIARY_ENTRY_ID);
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        final DiaryEntry entry = mDb.diaryDao().loadDById(mDiaryEntryId);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                populateUI(entry);
+                            }
+                        });
+                    }
+                });
             }
         }
     }
 
-//    @Override
-//    protected void onSavedInstanceState(Bundle outState)
-//    {
-//        outState.putInt(INSTANCE_DIARY_ID, mDiaryEntryId);
-//        super.onSaveInstanceState(outState);
-//
-//
-//    }
+    protected void onSavedInstanceState(Bundle outState)
+    {
+        outState.putInt(INSTANCE_DIARY_ID, mDiaryEntryId);
+        super.onSaveInstanceState(outState);
+    }
 
     private void intViews() {
         mEditTitle = findViewById(R.id.editTextDiaryTitle);
@@ -83,7 +89,13 @@ public class AddDiaryEntry extends AppCompatActivity {
 
     private void populateUI(DiaryEntry diaryEntry)
     {
+        if (diaryEntry == null)
+        {
+            return;
+        }
 
+        mEditTitle.setText(diaryEntry.getTitle());
+        mEditDescription.setText(diaryEntry.getDescription());
     }
 
     public void onSaveButtonClicked() {
@@ -91,9 +103,21 @@ public class AddDiaryEntry extends AppCompatActivity {
         String description = mEditDescription.getText().toString();
         Date date = new Date();
 
-        DiaryEntry taskEntry = new DiaryEntry(title, description, date);
-        mDb.diaryDao().insertTask(taskEntry);
-        finish();
+        final DiaryEntry diaryEntry = new DiaryEntry(title, description, date);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if(mDiaryEntryId == DEFAULT_DIARY_ENTRY_ID){
+                    mDb.diaryDao().insertDiary(diaryEntry);
+                }else {
+                    diaryEntry.setId(mDiaryEntryId);
+                    mDb.diaryDao().updateDiary(diaryEntry);
+                }
+                finish();
+
+            }
+        });
+
     }
 
 
